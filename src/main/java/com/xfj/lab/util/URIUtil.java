@@ -1,4 +1,4 @@
-package com.xfj.lab.Util.URIUtil;
+package com.xfj.lab.util.uriUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.xfj.lab.Util.DBUtil.DBConnectionUtil;
-import com.xfj.lab.Util.DBUtil.DBOperationUtil;
+import com.xfj.lab.util.dbUtil.DBConnectionUtil;
+import com.xfj.lab.util.dbUtil.DBOperationUtil;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;

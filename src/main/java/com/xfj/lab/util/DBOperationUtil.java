@@ -1,4 +1,4 @@
-package com.xfj.lab.Util.DBUtil;
+package com.xfj.lab.util.dbUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
