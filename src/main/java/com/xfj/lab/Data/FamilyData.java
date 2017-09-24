@@ -1,4 +1,4 @@
-package com.xfj.lab.Data;
+package com.xfj.lab.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

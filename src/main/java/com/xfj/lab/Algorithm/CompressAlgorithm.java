@@ -1,10 +1,10 @@
-package com.xfj.lab.Algorithm;
+package com.xfj.lab.algorithm;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.xfj.lab.Util.URIUtil.URIUtil;
+import com.xfj.lab.util.URIUtil;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;

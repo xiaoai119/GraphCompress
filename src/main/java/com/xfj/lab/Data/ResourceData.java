@@ -1,11 +1,10 @@
-package com.xfj.lab.Data;
+package com.xfj.lab.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.jena.rdf.model.Resource;
 
-import java.util.HashSet;
 import java.util.Set;
 @Data
 @NoArgsConstructor

@@ -2,8 +2,8 @@ package GraphCompress;
 import java.io.InputStream;
 import java.util.*;
 
-import com.xfj.lab.Algorithm.CompressAlgorithm;
-import com.xfj.lab.Util.URIUtil.URIUtil;
+import com.xfj.lab.algorithm.CompressAlgorithm;
+import com.xfj.lab.util.URIUtil;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.util.FileManager;
 import edu.uci.ics.jung.graph.*;
