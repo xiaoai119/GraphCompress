@@ -1,4 +1,4 @@
-package com.xfj.lab.util.dbUtil;
+package com.xfj.lab.util;
 
 import java.sql.*;
 /**
