@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GraphNode {
-    Integer distance;
-    Integer NodeNum;
+    String name;
+    Integer id;
+    Integer dfsCode;
+    boolean isvisitied;
 }
