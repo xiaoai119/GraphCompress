@@ -1,6 +1,7 @@
 package com.xfj.lab.data;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GraphNode {
+@Builder
+public class Vertex {
     String name;
     Integer id;
     Integer dfsCode;

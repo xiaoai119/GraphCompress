@@ -1,4 +1,4 @@
-package com.xfj.lab.algorithm;
+package com.xfj.lab.data;
 
 import java.util.ArrayList;
 
@@ -8,15 +8,20 @@ import java.util.ArrayList;
 public class DFSstack {
     ArrayList<Integer> stackList=new ArrayList<>();
 
-    private void push(Integer e){
+    public void push(Integer e){
         stackList.add(e);
     }
 
-    private Integer pop(){
+    public Integer pop(){
         int size= stackList.size();
         int e=stackList.get(size-1);
         stackList.remove(size-1);
         return e;
+    }
+
+    public Integer getTop(){
+        int size= stackList.size();
+        return stackList.get(size-1);
     }
 
     public boolean isEmpty(){

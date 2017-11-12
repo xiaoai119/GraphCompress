@@ -2,6 +2,9 @@ package com.xfj.lab.lab;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Maps;
+import com.xfj.lab.algorithm.DFSTraversal;
+import com.xfj.lab.data.Vertex;
+import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.util.FileManager;
 
@@ -18,17 +21,82 @@ public class GSpanLab {
     public static int frequentVertexShreshold=100;
     //边频繁阈值
     public static int frequentEdgeShreshold=50;
+    public static UndirectedSparseGraph<Integer ,Integer> graph;
+    public static Integer vertexId=0;
+    public static Integer edgeId=0;
+    public static HashMap<Integer,Vertex> vertexMap;
+    public static HashMap<String,Integer> vertexIdMap;
+    public static HashMap<String,Integer> edgeIdMap;
+    public static HashMap<Integer, Boolean> isVisitedVertex;
+    public static HashSet<String> vertexSet;
+    public static HashSet<String> edgeSet;
+
     public static void main(String agrs[]) {
         Model model = getModelFromFile();
         HashMap<String, Long> frequentVertexMap = filterInfrequentVertex(model);
         HashMap<String, Long> frequentEdgeMap = filterInfrequentEdge(model);
         List<String> sortedVertexList = sortVertexAndEdge(frequentVertexMap, frequentEdgeMap);
-        // TODO: 2017/11/5 test
-        sortedVertexList.get(0);
-        sortedVertexList.get(0);
-
         frequentVertexMap.clear();
         frequentEdgeMap.clear();
+        initGraph(model);
+        DFSTraversal dfsTraversal = new DFSTraversal(graph);
+        dfsTraversal.traversal(isVisitedVertex,vertexMap);
+    }
+
+    private static void initGraph(Model model) {
+        StmtIterator iter = model.listStatements();
+        while(iter.hasNext()){
+            getVertexSet(iter);
+            getVertexMap();
+            isVisitedVertex = vertexMap.entrySet().stream().map(entry -> Maps.immutableEntry(entry.getValue().getId(), false)).
+                    collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, HashMap::new));
+            vertexIdMap = vertexMap.entrySet().stream().map(entry -> Maps.immutableEntry( entry.getValue().getName(),entry.getValue().getId())).
+                    collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, HashMap::new));
+        }
+        iter.close();
+
+        StmtIterator iter1 = model.listStatements();
+        while(iter1.hasNext()){
+            Statement statement = iter.nextStatement();
+            Property predicate = statement.getPredicate();
+            Resource subject = statement.getSubject();
+            RDFNode object = statement.getObject();
+            if(object instanceof Resource){
+                Integer sub = vertexIdMap.get(subject.toString());
+                Integer obj = vertexIdMap.get(object.toString());
+                graph.addEdge(edgeIdMap.get(predicate.toString()),sub,obj);
+            }
+        }
+    }
+
+    private static void getVertexMap() {
+        vertexSet.forEach(resource->{
+            Vertex temp=Vertex.builder().
+                        id(vertexId).
+                        isvisitied(false).
+                        name(resource).
+                        build();
+            vertexMap.put(vertexId,temp);
+            graph.addVertex(vertexId);
+            vertexId++;
+            }
+        );
+        vertexSet.clear();
+    }
+
+    private static void getVertexSet(StmtIterator iter) {
+        Statement statement = iter.nextStatement();
+        Resource subject = statement.getSubject();
+        RDFNode object = statement.getObject();
+        Property predicate = statement.getPredicate();
+        if(!edgeIdMap.containsKey(predicate.toString())){
+            edgeIdMap.put(predicate.toString(),edgeId);
+            edgeId++;
+        }
+        vertexSet.add(subject.toString());
+        if(object instanceof Resource){
+            vertexSet.add(object.toString());
+        }
     }
 
     private static List<String> sortVertexAndEdge(HashMap<String, Long> frequentVertexMap, HashMap<String, Long> frequentEdgeMap) {
